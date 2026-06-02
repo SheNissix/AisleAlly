@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView style="@style/PageTitle" android:text="Profile"/>
+
+        <!-- INPUT CARD -->
+        <LinearLayout style="@style/Card" android:orientation="vertical">
+
+            <TextView style="@style/FieldLabel" android:text="Age"/>
+            <EditText android:id="@+id/et_age"
+                style="@style/InputField" android:inputType="number" android:hint="e.g. 25"/>
+
+            <TextView style="@style/FieldLabel" android:text="Weight (kg)"/>
+            <EditText android:id="@+id/et_weight"
+                style="@style/InputField" android:inputType="numberDecimal" android:hint="e.g. 65"/>
+
+            <TextView style="@style/FieldLabel" android:text="Height (cm)"/>
+            <EditText android:id="@+id/et_height"
+                style="@style/InputField" android:inputType="numberDecimal" android:hint="e.g. 170"/>
+
+            <TextView style="@style/FieldLabel" android:text="Sex"/>
+            <Spinner android:id="@+id/spinner_sex"
+                style="@style/SpinnerField"/>
+
+            <TextView style="@style/FieldLabel" android:text="Activity Level"/>
+            <Spinner android:id="@+id/spinner_activity"
+                style="@style/SpinnerField"/>
+
+            <Button android:id="@+id/btn_generate_targets"
+                style="@style/PrimaryButton"
+                android:text="Generate Nutrition Targets"/>
+        </LinearLayout>
+
+        <!-- TARGETS CARD -->
+        <LinearLayout style="@style/Card" android:orientation="vertical">
+
+            <TextView style="@style/SectionTitle" android:text="Nutritional Targets"/>
+
+            <include layout="@layout/target_card_item"
+                android:id="@+id/card_daily_calories"/>
+
+            <LinearLayout style="@style/TargetCard" android:orientation="vertical">
+                <TextView style="@style/TargetLabel" android:text="Daily Caloric Target"/>
+                <TextView android:id="@+id/tv_daily_calories" style="@style/TargetValue" android:text="--"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/TargetCard" android:orientation="vertical">
+                <TextView style="@style/TargetLabel" android:text="Minimum Calories"/>
+                <TextView android:id="@+id/tv_min_calories" style="@style/TargetValue" android:text="--"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/TargetCard" android:orientation="vertical">
+                <TextView style="@style/TargetLabel" android:text="Maximum Calories"/>
+                <TextView android:id="@+id/tv_max_calories" style="@style/TargetValue" android:text="--"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/TargetCard" android:orientation="vertical">
+                <TextView style="@style/TargetLabel" android:text="Protein (g/day)"/>
+                <TextView android:id="@+id/tv_protein_target" style="@style/TargetValue" android:text="--"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/TargetCard" android:orientation="vertical">
+                <TextView style="@style/TargetLabel" android:text="Fiber (g/day)"/>
+                <TextView android:id="@+id/tv_fiber_target" style="@style/TargetValue" android:text="--"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/TargetCard" android:orientation="vertical">
+                <TextView style="@style/TargetLabel" android:text="Fat (g/day)"/>
+                <TextView android:id="@+id/tv_fat_target" style="@style/TargetValue" android:text="--"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

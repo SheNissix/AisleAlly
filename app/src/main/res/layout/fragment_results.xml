@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView style="@style/PageTitle" android:text="Results"/>
+
+        <!-- SUMMARY CARD -->
+        <LinearLayout style="@style/Card" android:orientation="vertical">
+            <TextView style="@style/SectionTitle" android:text="Optimization Summary"/>
+
+            <LinearLayout style="@style/StatRow" android:orientation="horizontal">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="Total Cost" android:textSize="15sp"
+                    android:textColor="#000000"/>
+                <TextView android:id="@+id/tv_total_cost"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="-- / --" android:textSize="15sp"
+                    android:textColor="#000000"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/StatRow" android:orientation="horizontal">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="Calories" android:textSize="15sp"
+                    android:textColor="#000000"/>
+                <TextView android:id="@+id/tv_avg_calories"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="-- / --" android:textSize="15sp"
+                    android:textColor="#000000"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/StatRow" android:orientation="horizontal">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="Protein" android:textSize="15sp"
+                    android:textColor="#000000"/>
+                <TextView android:id="@+id/tv_avg_protein"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="-- / --" android:textSize="15sp"
+                    android:textColor="#000000"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/StatRow" android:orientation="horizontal">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="Fiber" android:textSize="15sp"
+                    android:textColor="#000000"/>
+                <TextView android:id="@+id/tv_avg_fiber"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="-- / --" android:textSize="15sp"
+                    android:textColor="#000000"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/StatRow" android:orientation="horizontal">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="Fat" android:textSize="15sp"
+                    android:textColor="#000000"/>
+                <TextView android:id="@+id/tv_avg_fat"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="-- / --" android:textSize="15sp"
+                    android:textColor="#000000"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/StatRow" android:orientation="horizontal">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="Total Items" android:textSize="15sp"
+                    android:textColor="#000000"/>
+                <TextView android:id="@+id/tv_item_count"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="--" android:textSize="15sp"
+                    android:textColor="#000000"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- SELECTED ITEMS CARD -->
+        <LinearLayout style="@style/Card" android:orientation="vertical">
+            <TextView style="@style/SectionTitle" android:text="Selected Items"/>
+            <LinearLayout
+                android:id="@+id/container_selected_items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="green_primary">#2f6b2f</color>
+    <color name="green_dark">#1e4d1e</color>
+    <color name="background">#f3f4f6</color>
+    <color name="card_bg">#fafafa</color>
+    <color name="text_secondary">#666666</color>
+    <color name="divider">#eeeeee</color>
+    <color name="edit_btn_bg">#e3efff</color>
+    <color name="edit_btn_text">#2563eb</color>
+    <color name="white">#ffffff</color>
+    <color name="nav_active">#2f6b2f</color>
+    <color name="nav_inactive">#666666</color>
+</resources>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView style="@style/PageTitle" android:text="Optimize"/>
+
+        <!-- CONSTRAINTS CARD -->
+        <LinearLayout style="@style/Card" android:orientation="vertical">
+            <TextView style="@style/SectionTitle" android:text="Constraints"/>
+
+            <TextView style="@style/FieldLabel" android:text="Budget (₱)"/>
+            <EditText android:id="@+id/et_budget" style="@style/InputField" android:inputType="numberDecimal" android:hint="e.g. 1000"/>
+
+            <TextView style="@style/FieldLabel" android:text="Days"/>
+            <EditText android:id="@+id/et_days" style="@style/InputField" android:inputType="number" android:hint="e.g. 7"/>
+
+            <Button android:id="@+id/btn_update_targets"
+                style="@style/SecondaryButton"
+                android:text="Update Nutrition Targets"/>
+        </LinearLayout>
+
+        <!-- NUTRITION TARGETS CARD -->
+        <LinearLayout style="@style/Card" android:orientation="vertical">
+            <TextView style="@style/SectionTitle" android:text="Nutrition Targets"/>
+
+            <TextView style="@style/FieldLabel" android:text="Minimum Calories"/>
+            <EditText android:id="@+id/et_min_calories" style="@style/InputField" android:inputType="number"/>
+
+            <TextView style="@style/FieldLabel" android:text="Maximum Calories"/>
+            <EditText android:id="@+id/et_max_calories" style="@style/InputField" android:inputType="number"/>
+
+            <TextView style="@style/FieldLabel" android:text="Protein (g)"/>
+            <EditText android:id="@+id/et_protein_target" style="@style/InputField" android:inputType="number"/>
+
+            <TextView style="@style/FieldLabel" android:text="Fiber (g)"/>
+            <EditText android:id="@+id/et_fiber_target" style="@style/InputField" android:inputType="number"/>
+
+            <TextView style="@style/FieldLabel" android:text="Fat (g)"/>
+            <EditText android:id="@+id/et_fat_target" style="@style/InputField" android:inputType="number"/>
+        </LinearLayout>
+
+        <!-- CATEGORY LIMITS CARD -->
+        <LinearLayout style="@style/Card" android:orientation="vertical">
+            <TextView style="@style/SectionTitle" android:text="Category Limits"/>
+
+            <!-- Protein -->
+            <TextView style="@style/CategoryHeader" android:text="Protein"/>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:paddingEnd="8dp">
+                    <TextView style="@style/FieldLabel" android:text="Min"/>
+                    <EditText android:id="@+id/et_protein_min" style="@style/InputField" android:inputType="number" android:hint="0"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:paddingStart="8dp">
+                    <TextView style="@style/FieldLabel" android:text="Max"/>
+                    <EditText android:id="@+id/et_protein_max" style="@style/InputField" android:inputType="number" android:hint="∞"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Vegetables -->
+            <TextView style="@style/CategoryHeader" android:text="Vegetables"/>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:paddingEnd="8dp">
+                    <TextView style="@style/FieldLabel" android:text="Min"/>
+                    <EditText android:id="@+id/et_vegetable_min" style="@style/InputField" android:inputType="number" android:hint="0"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:paddingStart="8dp">
+                    <TextView style="@style/FieldLabel" android:text="Max"/>
+                    <EditText android:id="@+id/et_vegetable_max" style="@style/InputField" android:inputType="number" android:hint="∞"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Carbohydrates -->
+            <TextView style="@style/CategoryHeader" android:text="Carbohydrates"/>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:paddingEnd="8dp">
+                    <TextView style="@style/FieldLabel" android:text="Min"/>
+                    <EditText android:id="@+id/et_carb_min" style="@style/InputField" android:inputType="number" android:hint="0"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:paddingStart="8dp">
+                    <TextView style="@style/FieldLabel" android:text="Max"/>
+                    <EditText android:id="@+id/et_carb_max" style="@style/InputField" android:inputType="number" android:hint="∞"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Fats -->
+            <TextView style="@style/CategoryHeader" android:text="Fats"/>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:paddingEnd="8dp">
+                    <TextView style="@style/FieldLabel" android:text="Min"/>
+                    <EditText android:id="@+id/et_fat_min" style="@style/InputField" android:inputType="number" android:hint="0"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:paddingStart="8dp">
+                    <TextView style="@style/FieldLabel" android:text="Max"/>
+                    <EditText android:id="@+id/et_fat_max" style="@style/InputField" android:inputType="number" android:hint="∞"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button android:id="@+id/btn_optimize"
+            style="@style/PrimaryButton"
+            android:text="Run Optimization"
+            android:layout_marginTop="8dp"/>
+
+    </LinearLayout>
+</ScrollView>
