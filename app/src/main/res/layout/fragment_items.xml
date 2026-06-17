@@ -19,6 +19,16 @@
         <!-- ITEMS LIST CARD -->
         <LinearLayout style="@style/Card" android:orientation="vertical">
             <TextView style="@style/SectionTitle" android:text="Items List"/>
+
+            <EditText
+                android:id="@+id/et_search_items"
+                style="@style/InputField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="Search items..."
+                android:inputType="text"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_items"
                 android:layout_width="match_parent"

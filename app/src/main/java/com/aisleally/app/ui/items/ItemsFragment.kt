@@ -50,8 +50,27 @@ class ItemsFragment : Fragment() {
         binding.recyclerItems.adapter = adapter
 
         viewModel.items.observe(viewLifecycleOwner) { items ->
-            adapter.submitList(items)
+            val query = binding.etSearchItems.text.toString().trim()
+            if (query.isEmpty()) {
+                adapter.submitList(items)
+            } else {
+                adapter.submitList(performLinearSearch(items, query))
+            }
         }
+        
+        binding.etSearchItems.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: android.text.Editable?) {
+                val query = s?.toString()?.trim() ?: ""
+                val currentItems = viewModel.items.value ?: emptyList()
+                if (query.isEmpty()) {
+                    adapter.submitList(currentItems)
+                } else {
+                    adapter.submitList(performLinearSearch(currentItems, query))
+                }
+            }
+        })
 
         binding.spinnerCategory.adapter = ArrayAdapter(
             requireContext(), android.R.layout.simple_spinner_item,
@@ -59,6 +78,16 @@ class ItemsFragment : Fragment() {
         ).also { it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
 
         binding.btnSaveItem.setOnClickListener { saveItem() }
+    }
+
+    private fun performLinearSearch(items: List<GroceryItem>, query: String): List<GroceryItem> {
+        val result = mutableListOf<GroceryItem>()
+        for (item in items) {
+            if (item.name.contains(query, ignoreCase = true)) {
+                result.add(item)
+            }
+        }
+        return result
     }
 
     private fun saveItem() {
