@@ -9,7 +9,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.aisleally.app.R
+import com.aisleally.app.data.ProfileRepository
 import com.aisleally.app.databinding.FragmentProfileBinding
+import com.aisleally.app.model.UserProfile
 import com.aisleally.app.ui.SharedViewModel
 
 class ProfileFragment : Fragment() {
@@ -29,14 +31,16 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Populate spinners
+        val sexOptions = resources.getStringArray(R.array.sex_options)
         binding.spinnerSex.adapter = ArrayAdapter(
             requireContext(), android.R.layout.simple_spinner_item,
-            resources.getStringArray(R.array.sex_options)
+            sexOptions
         ).also { it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
 
+        val activityOptions = resources.getStringArray(R.array.activity_options)
         binding.spinnerActivity.adapter = ArrayAdapter(
             requireContext(), android.R.layout.simple_spinner_item,
-            resources.getStringArray(R.array.activity_options)
+            activityOptions
         ).also { it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
 
         binding.ivActivityInfo.setOnClickListener {
@@ -58,6 +62,25 @@ class ProfileFragment : Fragment() {
             }
         }
 
+        // Load saved profile if available
+        ProfileRepository.profile?.let { profile ->
+            binding.etAge.setText(profile.age.toString())
+            binding.etWeight.setText(profile.profileWeightText())
+            binding.etHeight.setText(profile.profileHeightText())
+            
+            val sexIndex = sexOptions.indexOf(profile.sex)
+            if (sexIndex >= 0) binding.spinnerSex.setSelection(sexIndex)
+            
+            val actIndex = activityOptions.indexOf(profile.activity)
+            if (actIndex >= 0) binding.spinnerActivity.setSelection(actIndex)
+            
+            // Automatically generate targets on initial load if we have a saved profile
+            // Only generate if we don't already have valid targets in the viewModel
+            if (viewModel.nutritionTargets.value?.dailyCalories == 0) {
+                viewModel.generateTargets(profile.age, profile.weight, profile.height, profile.sex, profile.activity)
+            }
+        }
+
         binding.btnGenerateTargets.setOnClickListener {
             val age    = binding.etAge.text.toString().toIntOrNull()
             val weight = binding.etWeight.text.toString().toDoubleOrNull()
@@ -76,8 +99,20 @@ class ProfileFragment : Fragment() {
             val sex      = binding.spinnerSex.selectedItem.toString()
             val activity = binding.spinnerActivity.selectedItem.toString()
 
+            // Save to repository
+            ProfileRepository.saveProfile(UserProfile(age, weight, height, sex, activity))
+
             viewModel.generateTargets(age, weight, height, sex, activity)
         }
+    }
+    
+    // Extension functions to display doubles cleanly (e.g. "70" instead of "70.0")
+    private fun UserProfile.profileWeightText(): String {
+        return if (weight % 1.0 == 0.0) weight.toInt().toString() else weight.toString()
+    }
+
+    private fun UserProfile.profileHeightText(): String {
+        return if (height % 1.0 == 0.0) height.toInt().toString() else height.toString()
     }
 
     override fun onDestroyView() {

@@ -16,6 +16,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
+        // Initialize ItemRepository with context for SharedPreferences
+        com.aisleally.app.data.ItemRepository.init(applicationContext)
+        com.aisleally.app.data.ProfileRepository.init(applicationContext)
+        
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

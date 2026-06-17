@@ -2,6 +2,14 @@ package com.aisleally.app.model
 
 import java.io.Serializable
 
+data class UserProfile(
+    val age: Int,
+    val weight: Double,
+    val height: Double,
+    val sex: String,
+    val activity: String
+)
+
 data class GroceryItem(
     val id: String,
     val name: String,

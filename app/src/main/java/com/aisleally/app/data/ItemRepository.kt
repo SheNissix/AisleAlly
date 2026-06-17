@@ -1,8 +1,17 @@
 package com.aisleally.app.data
 
+import android.content.Context
 import com.aisleally.app.model.GroceryItem
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 object ItemRepository {
+
+    private const val PREFS_NAME = "aisleally_prefs"
+    private const val KEY_ITEMS = "grocery_items"
+    
+    private var prefs: android.content.SharedPreferences? = null
+    private val gson = Gson()
 
     val items: MutableList<GroceryItem> = mutableListOf(
         GroceryItem("1", "Chicken Breast", "protein",    180.0, 300.0, 55.0, 0.0,  8.0,  1, 0),
@@ -17,14 +26,42 @@ object ItemRepository {
         GroceryItem("10","Sweet Potato",   "carbohydrates", 45.0, 180.0,  4.0, 6.0,  0.0,  1, 0)
     )
 
+    fun init(context: Context) {
+        prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        loadFromPrefs()
+    }
+
+    private fun loadFromPrefs() {
+        val json = prefs?.getString(KEY_ITEMS, null)
+        if (json != null) {
+            val type = object : TypeToken<List<GroceryItem>>() {}.type
+            val savedItems: List<GroceryItem> = gson.fromJson(json, type)
+            items.clear()
+            items.addAll(savedItems)
+        }
+    }
+
+    private fun saveToPrefs() {
+        prefs?.edit()?.putString(KEY_ITEMS, gson.toJson(items))?.apply()
+    }
+
     fun findById(id: String): GroceryItem? = items.find { it.id == id }
 
-    fun add(item: GroceryItem) { items.add(item) }
+    fun add(item: GroceryItem) { 
+        items.add(item) 
+        saveToPrefs()
+    }
 
     fun update(updated: GroceryItem) {
         val index = items.indexOfFirst { it.id == updated.id }
-        if (index != -1) items[index] = updated
+        if (index != -1) {
+            items[index] = updated
+            saveToPrefs()
+        }
     }
 
-    fun remove(id: String) { items.removeAll { it.id == id } }
+    fun remove(id: String) { 
+        items.removeAll { it.id == id } 
+        saveToPrefs()
+    }
 }
