@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:paddingTop="16dp"
-    android:paddingBottom="100dp"
+    android:paddingBottom="120dp"
     android:clipToPadding="false">
 
     <LinearLayout
@@ -41,10 +41,8 @@
             <TextView style="@style/SectionTitle" android:text="Add / Edit Item"/>
 
             <Spinner android:id="@+id/spinner_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/input_bg"/>
+                style="@style/SpinnerField"
+                android:layout_marginBottom="8dp"/>
 
             <EditText android:id="@+id/et_item_name"    style="@style/InputField" android:hint="Item Name"/>
             <EditText android:id="@+id/et_item_price"   style="@style/InputField" android:hint="Price (₱)" android:inputType="numberDecimal"/>

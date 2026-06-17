@@ -77,7 +77,7 @@
     <style name="SpinnerField">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">48dp</item>
-        <item name="android:background">@drawable/input_bg</item>
+        <item name="android:background">@drawable/bg_spinner_input</item>
         <item name="android:layout_marginTop">4dp</item>
         <item name="android:paddingStart">10dp</item>
         <item name="android:paddingEnd">10dp</item>
