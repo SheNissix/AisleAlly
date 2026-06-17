@@ -5,8 +5,13 @@
         <item name="colorPrimary">@color/green_primary</item>
         <item name="colorPrimaryVariant">@color/green_dark</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="android:windowBackground">@color/background</item>
+        <item name="android:windowBackground">#F3F8F2</item>
         <item name="android:textColor">#000000</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 
     <!-- ── Shared component styles ── -->
@@ -16,6 +21,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">22sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
         <item name="android:layout_marginBottom">4dp</item>
     </style>
 
@@ -23,8 +29,8 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/card_bg</item>
-        <item name="android:padding">16dp</item>
-        <item name="android:layout_marginTop">14dp</item>
+        <item name="android:padding">24dp</item>
+        <item name="android:layout_marginTop">24dp</item>
         <item name="android:elevation">2dp</item>
     </style>
 
@@ -33,8 +39,9 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">17sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
         <item name="android:textColor">@color/green_primary</item>
-        <item name="android:layout_marginBottom">12dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
     </style>
 
     <style name="CategoryHeader">
@@ -42,6 +49,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">15sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
         <item name="android:textColor">#444444</item>
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:layout_marginBottom">4dp</item>
@@ -52,7 +60,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/text_secondary</item>
-        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:layout_marginTop">20dp</item>
     </style>
 
     <style name="InputField">
@@ -78,7 +86,7 @@
     <style name="PrimaryButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">48dp</item>
-        <item name="android:layout_marginTop">14dp</item>
+        <item name="android:layout_marginTop">32dp</item>
         <item name="android:backgroundTint">@color/green_primary</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">15sp</item>
@@ -88,7 +96,7 @@
     <style name="SecondaryButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">48dp</item>
-        <item name="android:layout_marginTop">14dp</item>
+        <item name="android:layout_marginTop">32dp</item>
         <item name="android:backgroundTint">#e8f5e9</item>
         <item name="android:textColor">@color/green_primary</item>
         <item name="android:textSize">15sp</item>
@@ -99,8 +107,8 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/target_card_bg</item>
-        <item name="android:padding">14dp</item>
-        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:padding">20dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
     </style>
 
     <style name="TargetLabel">
@@ -116,14 +124,16 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/figtree_regular</item>
+        <item name="android:fontFeatureSettings">tnum</item>
         <item name="android:textColor">@color/green_primary</item>
     </style>
 
     <style name="StatRow">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingTop">12dp</item>
-        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
         <item name="android:gravity">center_vertical</item>
     </style>
 

@@ -20,7 +20,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textSize="15sp"/>
+            android:textSize="15sp"
+            android:fontFamily="@font/poppins_bold"/>
 
         <TextView
             android:id="@+id/tv_item_meta"
@@ -28,6 +29,8 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:textColor="@color/text_secondary"
+            android:fontFamily="@font/figtree_regular"
+            android:fontFeatureSettings="tnum"
             android:layout_marginTop="2dp"/>
     </LinearLayout>
 
@@ -53,6 +56,8 @@
             android:inputType="number"
             android:textSize="13sp"
             android:textColor="#000000"
+            android:fontFamily="@font/figtree_regular"
+            android:fontFeatureSettings="tnum"
             android:gravity="center"
             android:padding="4dp"
             android:background="@drawable/input_bg"/>
@@ -80,6 +85,8 @@
             android:inputType="number"
             android:textSize="13sp"
             android:textColor="#000000"
+            android:fontFamily="@font/figtree_regular"
+            android:fontFeatureSettings="tnum"
             android:gravity="center"
             android:padding="4dp"
             android:background="@drawable/input_bg"/>
