@@ -39,6 +39,14 @@ class ProfileFragment : Fragment() {
             resources.getStringArray(R.array.activity_options)
         ).also { it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
 
+        binding.ivActivityInfo.setOnClickListener {
+            androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                .setTitle("Activity Levels")
+                .setMessage("• Sedentary: Little or no exercise.\n• Lightly Active: Light exercise 1-3 days/week.\n• Moderately Active: Moderate exercise 3-5 days/week.\n• Very Active: Heavy exercise 6-7 days/week.\n• Super Active: Very heavy physical job or training.")
+                .setPositiveButton("Got It", null)
+                .show()
+        }
+
         viewModel.nutritionTargets.observe(viewLifecycleOwner) { targets ->
             if (targets.dailyCalories > 0) {
                 binding.tvDailyCalories.text   = "${targets.dailyCalories} kcal"

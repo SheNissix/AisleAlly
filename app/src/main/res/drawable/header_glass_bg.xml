@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- Highly solid (90% opacity - Hex E6) Light Yellow base to simulate heavy frosted glass -->
+    <solid android:color="#E6FFF9C4" />
+</shape>

@@ -3,7 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@color/background"
+    android:paddingTop="72dp"
+    android:paddingBottom="100dp"
+    android:clipToPadding="false">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,6 +27,8 @@
                 <TextView android:id="@+id/tv_total_cost"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="-- / --" android:textSize="15sp"
+                    android:fontFamily="@font/figtree_regular"
+                    android:fontFeatureSettings="tnum"
                     android:textColor="#000000"/>
             </LinearLayout>
 
@@ -34,6 +39,8 @@
                 <TextView android:id="@+id/tv_avg_calories"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="-- / --" android:textSize="15sp"
+                    android:fontFamily="@font/figtree_regular"
+                    android:fontFeatureSettings="tnum"
                     android:textColor="#000000"/>
             </LinearLayout>
 
@@ -44,6 +51,8 @@
                 <TextView android:id="@+id/tv_avg_protein"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="-- / --" android:textSize="15sp"
+                    android:fontFamily="@font/figtree_regular"
+                    android:fontFeatureSettings="tnum"
                     android:textColor="#000000"/>
             </LinearLayout>
 
@@ -54,6 +63,8 @@
                 <TextView android:id="@+id/tv_avg_fiber"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="-- / --" android:textSize="15sp"
+                    android:fontFamily="@font/figtree_regular"
+                    android:fontFeatureSettings="tnum"
                     android:textColor="#000000"/>
             </LinearLayout>
 
@@ -64,6 +75,8 @@
                 <TextView android:id="@+id/tv_avg_fat"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="-- / --" android:textSize="15sp"
+                    android:fontFamily="@font/figtree_regular"
+                    android:fontFeatureSettings="tnum"
                     android:textColor="#000000"/>
             </LinearLayout>
 
@@ -74,6 +87,8 @@
                 <TextView android:id="@+id/tv_item_count"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="--" android:textSize="15sp"
+                    android:fontFamily="@font/figtree_regular"
+                    android:fontFeatureSettings="tnum"
                     android:textColor="#000000"/>
             </LinearLayout>
         </LinearLayout>

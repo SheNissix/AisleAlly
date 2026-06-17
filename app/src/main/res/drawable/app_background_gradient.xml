@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- Extremely subtle radial gradient: Yellow -> Green -> White -->
+    <!-- Opacity is around 10-15% for the colors so it remains very light -->
+    <gradient
+        android:type="radial"
+        android:gradientRadius="600dp"
+        android:centerX="0.5"
+        android:centerY="0.5"
+        android:startColor="#26e7c813"
+        android:centerColor="#1A4aa756"
+        android:endColor="#FFFFFF" />
+</shape>
