@@ -93,14 +93,14 @@
     </LinearLayout>
 
     <!-- Edit Button -->
-    <Button
+    <ImageButton
         android:id="@+id/btn_edit"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:text="✎"
-        android:textSize="14sp"
-        android:padding="0dp"
-        android:backgroundTint="@color/edit_btn_bg"
-        android:textColor="@color/edit_btn_text"/>
+        android:src="@drawable/ic_edit"
+        android:scaleType="centerInside"
+        android:padding="8dp"
+        android:background="@drawable/circle_bg_orange"
+        android:contentDescription="Edit"/>
 
 </LinearLayout>
