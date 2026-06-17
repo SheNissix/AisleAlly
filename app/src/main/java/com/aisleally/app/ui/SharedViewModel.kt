@@ -31,9 +31,18 @@ class SharedViewModel : ViewModel() {
         refreshItems()
     }
 
-    fun updateMaxQuantity(id: String, value: Int) {
-        ItemRepository.findById(id)?.let { it.maxQuantity = value }
+    fun deleteItem(id: String) {
+        ItemRepository.remove(id)
         refreshItems()
+    }
+
+    fun updateMaxQuantity(id: String, value: Int) {
+        val item = ItemRepository.findById(id)
+        if (item != null) {
+            val updated = item.copy(maxQuantity = value)
+            ItemRepository.update(updated)
+            refreshItems()
+        }
     }
 
     fun updateForcedQuantity(id: String, value: Int): String? {
@@ -41,7 +50,8 @@ class SharedViewModel : ViewModel() {
         if (value > item.maxQuantity) {
             return "Forced quantity cannot exceed max quantity."
         }
-        item.forcedQuantity = value
+        val updated = item.copy(forcedQuantity = value)
+        ItemRepository.update(updated)
         refreshItems()
         return null
     }
@@ -84,7 +94,7 @@ class SharedViewModel : ViewModel() {
         constraints.value = c
         viewModelScope.launch {
             val result = withContext(Dispatchers.Default) {
-                Optimizer.run(ItemRepository.items, c)
+                Optimizer.run(ItemRepository.items.toList(), c)
             }
             optimizationResult.value = result
         }

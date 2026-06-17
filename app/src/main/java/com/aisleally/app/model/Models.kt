@@ -11,10 +11,10 @@ data class GroceryItem(
     val protein: Double,
     val fiber: Double,
     val fat: Double,
-    var maxQuantity: Int = 1,
-    var forcedQuantity: Int = 0,
+    val maxQuantity: Int = 1,
+    val forcedQuantity: Int = 0,
     // Used internally during optimization
-    var nutritionScore: Double = 0.0
+    val nutritionScore: Double = 0.0
 ) : Serializable
 
 data class SolutionItem(
@@ -58,3 +58,20 @@ data class OptimizationConstraints(
         "fats" to CategoryLimit()
     )
 )
+
+// In models.kt or a new file
+open class Event<out T>(private val content: T) {
+    var hasBeenHandled = false
+        private set
+
+    fun getContentIfNotHandled(): T? {
+        return if (hasBeenHandled) {
+            null
+        } else {
+            hasBeenHandled = true
+            content
+        }
+    }
+
+    fun peekContent(): T = content
+}

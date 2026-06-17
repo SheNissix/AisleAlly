@@ -103,4 +103,16 @@
         android:background="@drawable/circle_bg_orange"
         android:contentDescription="Edit"/>
 
+    <!-- Remove Button -->
+    <ImageButton
+        android:id="@+id/btn_delete"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic_delete"
+        android:scaleType="centerInside"
+        android:padding="8dp"
+        android:background="@drawable/circle_bg_red"
+        android:contentDescription="Remove"/>
+
 </LinearLayout>

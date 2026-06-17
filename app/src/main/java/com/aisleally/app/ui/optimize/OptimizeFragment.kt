@@ -58,9 +58,12 @@ class OptimizeFragment : Fragment() {
                     viewModel.clearOptimizationResult()
                 }
                 is Optimizer.OptimizationResult.Success -> {
-                    activity?.findViewById<BottomNavigationView>(R.id.bottom_nav)
-                        ?.selectedItemId = R.id.nav_results
-                    // Note: We don't clear success here yet so ResultsFragment can see it
+                    // Only perform the redirect if it hasn't been navigated yet
+                    if (!hasNavigatedToResults) {
+                        hasNavigatedToResults = true
+                        activity?.findViewById<BottomNavigationView>(R.id.bottom_nav)
+                            ?.selectedItemId = R.id.nav_results
+                    }
                 }
             }
         }
@@ -93,6 +96,9 @@ class OptimizeFragment : Fragment() {
                 Toast.makeText(requireContext(), "Please enter valid budget and days.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
+            // Reset the navigation flag because we are running a brand-new optimization
+            hasNavigatedToResults = false
 
             val constraints = OptimizationConstraints(
                 budget        = budget,
@@ -129,5 +135,10 @@ class OptimizeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        // Keeps track of navigation state across fragment recreation
+        private var hasNavigatedToResults = false
     }
 }

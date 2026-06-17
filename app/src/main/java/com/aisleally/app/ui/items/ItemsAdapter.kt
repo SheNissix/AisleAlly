@@ -13,7 +13,8 @@ import com.aisleally.app.model.GroceryItem
 class ItemsAdapter(
     private val onEditClick       : (GroceryItem) -> Unit,
     private val onMaxQtyChanged   : (String, Int) -> Unit,
-    private val onForcedQtyChanged: (String, Int) -> Unit
+    private val onForcedQtyChanged: (String, Int) -> Unit,
+    private val onDeleteClick     : (String) -> Unit
 ) : ListAdapter<GroceryItem, ItemsAdapter.ItemViewHolder>(DiffCallback) {
 
     inner class ItemViewHolder(private val binding: ItemRowBinding) :
@@ -22,8 +23,8 @@ class ItemsAdapter(
         fun bind(item: GroceryItem) {
             binding.tvItemName.text = item.name
             binding.tvItemMeta.text =
-                "₱${item.price.toInt()} | ${item.calories.toInt()} kcal | " +
-                "${item.protein.toInt()}g protein | ${item.fiber.toInt()}g fiber | ${item.fat.toInt()}g fat"
+                "₱${String.format(java.util.Locale.US, "%.2f", item.price)} | ${Math.round(item.calories)} kcal | " +
+                "${Math.round(item.protein)}g protein | ${Math.round(item.fiber)}g fiber | ${Math.round(item.fat)}g fat"
 
             // Prevent TextWatcher cascade
             binding.etMaxQty.removeTextChangedListener(binding.etMaxQty.tag as? TextWatcher)
@@ -36,7 +37,7 @@ class ItemsAdapter(
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable?) {
-                    val v = s.toString().toIntOrNull() ?: return
+                    val v = s.toString().toIntOrNull() ?: 1
                     onMaxQtyChanged(item.id, v)
                 }
             }
@@ -44,7 +45,7 @@ class ItemsAdapter(
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable?) {
-                    val v = s.toString().toIntOrNull() ?: return
+                    val v = s.toString().toIntOrNull() ?: 0
                     onForcedQtyChanged(item.id, v)
                 }
             }
@@ -55,6 +56,7 @@ class ItemsAdapter(
             binding.etForcedQty.addTextChangedListener(forcedWatcher)
 
             binding.btnEdit.setOnClickListener { onEditClick(item) }
+            binding.btnDelete.setOnClickListener { onDeleteClick(item.id) }
         }
     }
 

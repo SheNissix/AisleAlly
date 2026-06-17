@@ -68,6 +68,11 @@ class ProfileFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            if (age <= 0 || weight <= 0.0 || height <= 0.0) {
+                Toast.makeText(requireContext(), "Please enter positive values for age, weight, and height.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val sex      = binding.spinnerSex.selectedItem.toString()
             val activity = binding.spinnerActivity.selectedItem.toString()
 

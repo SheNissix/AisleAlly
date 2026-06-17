@@ -39,6 +39,10 @@ class ItemsFragment : Fragment() {
             onForcedQtyChanged = { id, qty ->
                 val error = viewModel.updateForcedQuantity(id, qty)
                 if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+            },
+            onDeleteClick = { id ->
+                viewModel.deleteItem(id)
+                Toast.makeText(requireContext(), "Item removed.", Toast.LENGTH_SHORT).show()
             }
         )
 
@@ -68,6 +72,11 @@ class ItemsFragment : Fragment() {
         if (name.isEmpty() || price == null || calories == null ||
             protein == null || fiber == null || fat == null) {
             Toast.makeText(requireContext(), "Please fill in all fields.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (price <= 0.0 || calories < 0.0 || protein < 0.0 || fiber < 0.0 || fat < 0.0) {
+            Toast.makeText(requireContext(), "Price must be greater than 0. Calories and macros must be non-negative.", Toast.LENGTH_SHORT).show()
             return
         }
 

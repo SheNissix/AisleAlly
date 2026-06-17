@@ -79,11 +79,11 @@ class ResultsFragment : Fragment() {
             addItemRow(item, itemCost)
         }
 
-        binding.tvTotalCost.text     = "₱${totalCost.toInt()} / ₱${c.budget.toInt()}"
-        binding.tvAvgCalories.text   = "${totalCalories.toInt()} / ${c.minCalories.toInt()}–${c.maxCalories.toInt()} kcal"
-        binding.tvAvgProtein.text    = "${totalProtein.toInt()}g / ${c.proteinTarget.toInt()}g"
-        binding.tvAvgFiber.text      = "${totalFiber.toInt()}g / ${c.fiberTarget.toInt()}g"
-        binding.tvAvgFat.text        = "${totalFat.toInt()}g / ${c.fatTarget.toInt()}g"
+        binding.tvTotalCost.text     = "₱${String.format(java.util.Locale.US, "%.2f", totalCost)} / ₱${String.format(java.util.Locale.US, "%.2f", c.budget)}"
+        binding.tvAvgCalories.text   = "${Math.round(totalCalories)} / ${Math.round(c.minCalories)}–${Math.round(c.maxCalories)} kcal"
+        binding.tvAvgProtein.text    = "${Math.round(totalProtein)}g / ${Math.round(c.proteinTarget)}g"
+        binding.tvAvgFiber.text      = "${Math.round(totalFiber)}g / ${Math.round(c.fiberTarget)}g"
+        binding.tvAvgFat.text        = "${Math.round(totalFat)}g / ${Math.round(c.fatTarget)}g"
         binding.tvItemCount.text     = totalItems.toString()
     }
 
@@ -106,7 +106,7 @@ class ResultsFragment : Fragment() {
         }
 
         val detailView = TextView(requireContext()).apply {
-            text = "₱${item.price.toInt()} each · ${item.calories.toInt()} kcal each"
+            text = "₱${String.format(java.util.Locale.US, "%.2f", item.price)} each · ${Math.round(item.calories)} kcal each"
             setTextColor(ContextCompat.getColor(requireContext(), R.color.text_secondary))
         }
 
@@ -114,7 +114,7 @@ class ResultsFragment : Fragment() {
         infoLayout.addView(detailView)
 
         val priceView = TextView(requireContext()).apply {
-            text = "₱${itemCost.toInt()}"
+            text = "₱${String.format(java.util.Locale.US, "%.2f", itemCost)}"
             setTypeface(null, android.graphics.Typeface.BOLD)
             setTextColor(ContextCompat.getColor(requireContext(), R.color.green_primary))
         }
