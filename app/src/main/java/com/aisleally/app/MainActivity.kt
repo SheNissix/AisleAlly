@@ -12,6 +12,12 @@ import com.aisleally.app.ui.results.ResultsFragment
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    
+    private var profileFragment = ProfileFragment()
+    private var optimizeFragment = OptimizeFragment()
+    private var resultsFragment = ResultsFragment()
+    private var itemsFragment = ItemsFragment()
+    private var activeFragment: Fragment = profileFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,27 +29,45 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Load default fragment
         if (savedInstanceState == null) {
-            loadFragment(ProfileFragment())
+            supportFragmentManager.beginTransaction().apply {
+                add(R.id.fragment_container, itemsFragment, "items").hide(itemsFragment)
+                add(R.id.fragment_container, resultsFragment, "results").hide(resultsFragment)
+                add(R.id.fragment_container, optimizeFragment, "optimize").hide(optimizeFragment)
+                add(R.id.fragment_container, profileFragment, "profile")
+            }.commit()
+        } else {
+            // Restore fragments if recreated by system
+            val p = supportFragmentManager.findFragmentByTag("profile") as? ProfileFragment
+            val o = supportFragmentManager.findFragmentByTag("optimize") as? OptimizeFragment
+            val r = supportFragmentManager.findFragmentByTag("results") as? ResultsFragment
+            val i = supportFragmentManager.findFragmentByTag("items") as? ItemsFragment
+            
+            p?.let { profileFragment = it }
+            o?.let { optimizeFragment = it }
+            r?.let { resultsFragment = it }
+            i?.let { itemsFragment = it }
         }
 
         binding.bottomNav.setOnItemSelectedListener { item ->
-            val fragment: Fragment = when (item.itemId) {
-                R.id.nav_profile  -> ProfileFragment()
-                R.id.nav_optimize -> OptimizeFragment()
-                R.id.nav_results  -> ResultsFragment()
-                R.id.nav_items    -> ItemsFragment()
-                else              -> ProfileFragment()
+            val targetFragment: Fragment = when (item.itemId) {
+                R.id.nav_profile  -> profileFragment
+                R.id.nav_optimize -> optimizeFragment
+                R.id.nav_results  -> resultsFragment
+                R.id.nav_items    -> itemsFragment
+                else              -> profileFragment
             }
-            loadFragment(fragment)
+            switchFragment(targetFragment)
             true
         }
     }
 
-    private fun loadFragment(fragment: Fragment) {
+    private fun switchFragment(targetFragment: Fragment) {
+        if (targetFragment == activeFragment) return
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
+            .hide(activeFragment)
+            .show(targetFragment)
             .commit()
+        activeFragment = targetFragment
     }
 }
