@@ -4,7 +4,7 @@
     <color name="green_dark">#388e3c</color>
     <color name="yellow_secondary">#e7c813</color>
     <color name="orange_accent">#ea9d12</color>
-    <color name="background">#f3f4f6</color>
+    <color name="background">#ffffff</color>
     <color name="card_bg">#fafafa</color>
     <color name="text_secondary">#666666</color>
     <color name="divider">#eeeeee</color>
@@ -13,4 +13,6 @@
     <color name="white">#ffffff</color>
     <color name="nav_active">#4aa756</color>
     <color name="nav_inactive">#666666</color>
+    <color name="field_bg">#fffbe6</color>
+    <color name="field_border">#e7c813</color>
 </resources>
