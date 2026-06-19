@@ -63,7 +63,8 @@ data class OptimizationConstraints(
         "protein" to CategoryLimit(),
         "vegetables" to CategoryLimit(),
         "carbohydrates" to CategoryLimit(),
-        "fats" to CategoryLimit()
+        "fats" to CategoryLimit(),
+        "others" to CategoryLimit()
     )
 )
 

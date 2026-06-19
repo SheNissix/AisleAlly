@@ -124,6 +124,10 @@ class OptimizeFragment : Fragment() {
                     "fats"          to CategoryLimit(
                         binding.etFatMin.text.toString().toIntOrNull() ?: 0,
                         binding.etFatMax.text.toString().toIntOrNull() ?: Int.MAX_VALUE
+                    ),
+                    "others"        to CategoryLimit(
+                        binding.etOthersMin.text.toString().toIntOrNull() ?: 0,
+                        binding.etOthersMax.text.toString().toIntOrNull() ?: Int.MAX_VALUE
                     )
                 )
             )

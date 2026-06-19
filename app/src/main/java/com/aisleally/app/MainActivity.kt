@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // Initialize ItemRepository with context for SharedPreferences
+        // Initialize ItemRepository to load saved items
         com.aisleally.app.data.ItemRepository.init(applicationContext)
         com.aisleally.app.data.ProfileRepository.init(applicationContext)
         

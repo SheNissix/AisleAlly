@@ -50,27 +50,35 @@ class ItemsFragment : Fragment() {
         binding.recyclerItems.adapter = adapter
 
         viewModel.items.observe(viewLifecycleOwner) { items ->
-            val query = binding.etSearchItems.text.toString().trim()
-            if (query.isEmpty()) {
-                adapter.submitList(items)
-            } else {
-                adapter.submitList(performLinearSearch(items, query))
-            }
+            updateSortedList()
         }
-        
+
         binding.etSearchItems.addTextChangedListener(object : android.text.TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: android.text.Editable?) {
-                val query = s?.toString()?.trim() ?: ""
-                val currentItems = viewModel.items.value ?: emptyList()
-                if (query.isEmpty()) {
-                    adapter.submitList(currentItems)
-                } else {
-                    adapter.submitList(performLinearSearch(currentItems, query))
-                }
+                updateSortedList()
             }
         })
+
+        binding.spinnerSortBy.adapter = ArrayAdapter(
+            requireContext(), android.R.layout.simple_spinner_item,
+            resources.getStringArray(R.array.sort_by_options)
+        ).also { it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
+
+        binding.spinnerSortOrder.adapter = ArrayAdapter(
+            requireContext(), android.R.layout.simple_spinner_item,
+            resources.getStringArray(R.array.sort_order_options)
+        ).also { it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
+
+        val sortSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: android.widget.AdapterView<*>?, view: View?, position: Int, id: Long) {
+                updateSortedList()
+            }
+            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
+        }
+        binding.spinnerSortBy.onItemSelectedListener = sortSelectedListener
+        binding.spinnerSortOrder.onItemSelectedListener = sortSelectedListener
 
         binding.spinnerCategory.adapter = ArrayAdapter(
             requireContext(), android.R.layout.simple_spinner_item,
@@ -88,6 +96,30 @@ class ItemsFragment : Fragment() {
             }
         }
         return result
+    }
+
+    private fun updateSortedList() {
+        val originalList = viewModel.items.value ?: return
+        val query = binding.etSearchItems.text.toString().trim()
+        val sortBy = binding.spinnerSortBy.selectedItem?.toString() ?: "Default"
+        val sortOrder = binding.spinnerSortOrder.selectedItem?.toString() ?: "Low to High"
+        val isHighToLow = sortOrder == "High to Low"
+
+        val filteredList = if (query.isEmpty()) {
+            originalList
+        } else {
+            performLinearSearch(originalList, query)
+        }
+
+        val sortedList = when (sortBy) {
+            "Price" -> if (isHighToLow) filteredList.sortedByDescending { it.price } else filteredList.sortedBy { it.price }
+            "Calories" -> if (isHighToLow) filteredList.sortedByDescending { it.calories } else filteredList.sortedBy { it.calories }
+            "Protein" -> if (isHighToLow) filteredList.sortedByDescending { it.protein } else filteredList.sortedBy { it.protein }
+            "Fiber" -> if (isHighToLow) filteredList.sortedByDescending { it.fiber } else filteredList.sortedBy { it.fiber }
+            "Fat" -> if (isHighToLow) filteredList.sortedByDescending { it.fat } else filteredList.sortedBy { it.fat }
+            else -> filteredList
+        }
+        adapter.submitList(sortedList)
     }
 
     private fun saveItem() {

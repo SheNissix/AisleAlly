@@ -119,6 +119,7 @@ object Optimizer {
         var startVegetable   = 0
         var startCarb        = 0
         var startFat         = 0
+        var startOthers      = 0
 
         for (item in sortedItems) {
             val qty = item.forcedQuantity
@@ -137,6 +138,7 @@ object Optimizer {
                 "vegetables"     -> startVegetable += qty
                 "carbohydrates"  -> startCarb      += qty
                 "fats"           -> startFat       += qty
+                "others"         -> startOthers    += qty
             }
         }
 
@@ -147,9 +149,86 @@ object Optimizer {
             return OptimizationResult.Failure("Forced items already exceed maximum calories.")
         }
 
-        // ── Branch and Bound ──────────────────────────────────────────
-        var bestScore    = Double.NEGATIVE_INFINITY
+        // ── Greedy Warm Start Heuristic ─────────────────────────────────
+        val greedySolution = mutableListOf<SolutionItem>()
+        var greedyPrice = startingPrice
+        var greedyCalories = startingCalories
+        var greedyProtein = startingProtein
+        var greedyFiber = startingFiber
+        var greedyFat = startingFat
+        val categoryCounts = mutableMapOf(
+            "protein" to startProtein,
+            "vegetables" to startVegetable,
+            "carbohydrates" to startCarb,
+            "fats" to startFat,
+            "others" to startOthers
+        )
+
+        // Initialize greedy list with starting/forced items
+        greedySolution.addAll(startingItems.map { it.copy() })
+
+        for (item in sortedItems) {
+            val remainingMax = item.maxQuantity - item.forcedQuantity
+            if (remainingMax <= 0) continue
+
+            // Determine how many we can buy of this item under constraints
+            var qtyToBuy = 0
+            for (q in 1..remainingMax) {
+                val nextPrice = greedyPrice + item.price
+                val nextCalories = greedyCalories + item.calories
+                val catCount = categoryCounts[item.category] ?: 0
+                val nextCatCount = catCount + 1
+
+                if (nextPrice <= budget &&
+                    nextCalories <= maxCalories &&
+                    nextCatCount <= (categoryLimits[item.category]?.max ?: Int.MAX_VALUE)
+                ) {
+                    qtyToBuy++
+                    greedyPrice = nextPrice
+                    greedyCalories = nextCalories
+                    greedyProtein += item.protein
+                    greedyFiber += item.fiber
+                    greedyFat += item.fat
+                    categoryCounts[item.category] = nextCatCount
+                } else {
+                    break
+                }
+            }
+
+            if (qtyToBuy > 0) {
+                val existing = greedySolution.find { it.id == item.id }
+                if (existing != null) {
+                    existing.quantity += qtyToBuy
+                } else {
+                    greedySolution.add(
+                        SolutionItem(item.id, item.name, item.category,
+                            item.price, item.calories, item.protein, item.fiber, item.fat, qtyToBuy)
+                    )
+                }
+            }
+        }
+
+        // Verify if greedy solution is feasible (satisfies minimum constraints)
+        val greedyFeasible = greedyCalories >= minCalories &&
+                (categoryCounts["protein"] ?: 0) >= (categoryLimits["protein"]?.min ?: 0) &&
+                (categoryCounts["vegetables"] ?: 0) >= (categoryLimits["vegetables"]?.min ?: 0) &&
+                (categoryCounts["carbohydrates"] ?: 0) >= (categoryLimits["carbohydrates"]?.min ?: 0) &&
+                (categoryCounts["fats"] ?: 0) >= (categoryLimits["fats"]?.min ?: 0) &&
+                (categoryCounts["others"] ?: 0) >= (categoryLimits["others"]?.min ?: 0)
+
+        var bestScore = Double.NEGATIVE_INFINITY
         var bestSolution = listOf<SolutionItem>()
+
+        if (greedyFeasible) {
+            bestScore = (if (proteinTarget > 0) greedyProtein / proteinTarget else 0.0) +
+                    (if (fiberTarget > 0) greedyFiber / fiberTarget else 0.0) -
+                    (if (fatTarget > 0) greedyFat / fatTarget else 0.0)
+            bestSolution = greedySolution
+        }
+
+        // ── Branch and Bound ──────────────────────────────────────────
+        var visitedNodes = 0
+        val MAX_NODES = 500000
 
         fun branch(
             index          : Int,
@@ -162,8 +241,12 @@ object Optimizer {
             proteinCount   : Int,
             vegetableCount : Int,
             carbCount      : Int,
-            fatCount       : Int
+            fatCount       : Int,
+            othersCount    : Int
         ) {
+            visitedNodes++
+            if (visitedNodes > MAX_NODES) return
+
             // ── Pruning ────────────────────────────────────────────────
             if (currentPrice    > budget)      return
             if (currentCalories > maxCalories) return
@@ -171,6 +254,7 @@ object Optimizer {
             if (vegetableCount > (categoryLimits["vegetables"]?.max   ?: Int.MAX_VALUE)) return
             if (carbCount      > (categoryLimits["carbohydrates"]?.max?: Int.MAX_VALUE)) return
             if (fatCount       > (categoryLimits["fats"]?.max         ?: Int.MAX_VALUE)) return
+            if (othersCount    > (categoryLimits["others"]?.max       ?: Int.MAX_VALUE)) return
 
             // ── Upper bound ────────────────────────────────────────────
             val currentScore = (if (proteinTarget > 0) currentProtein / proteinTarget else 0.0) +
@@ -205,6 +289,7 @@ object Optimizer {
                 if (vegetableCount < (categoryLimits["vegetables"]?.min   ?: 0)) return
                 if (carbCount      < (categoryLimits["carbohydrates"]?.min?: 0)) return
                 if (fatCount       < (categoryLimits["fats"]?.min         ?: 0)) return
+                if (othersCount    < (categoryLimits["others"]?.min       ?: 0)) return
 
                 val totalScore = (if (proteinTarget > 0) currentProtein / proteinTarget else 0.0) +
                                  (if (fiberTarget   > 0) currentFiber   / fiberTarget   else 0.0) -
@@ -234,6 +319,7 @@ object Optimizer {
             val nextVegetable = vegetableCount + if (ei.category == "vegetables")     ei.quantityGroup else 0
             val nextCarb      = carbCount      + if (ei.category == "carbohydrates")  ei.quantityGroup else 0
             val nextFat       = fatCount       + if (ei.category == "fats")           ei.quantityGroup else 0
+            val nextOthers    = othersCount    + if (ei.category == "others")         ei.quantityGroup else 0
 
             branch(index + 1, updatedItems,
                 currentPrice    + ei.groupedPrice,
@@ -241,17 +327,17 @@ object Optimizer {
                 currentProtein  + ei.groupedProtein,
                 currentFiber    + ei.groupedFiber,
                 currentFat      + ei.groupedFat,
-                nextProtein, nextVegetable, nextCarb, nextFat)
+                nextProtein, nextVegetable, nextCarb, nextFat, nextOthers)
 
             // ── Exclude branch ─────────────────────────────────────────
             branch(index + 1, currentItems,
                 currentPrice, currentCalories, currentProtein, currentFiber, currentFat,
-                proteinCount, vegetableCount, carbCount, fatCount)
+                proteinCount, vegetableCount, carbCount, fatCount, othersCount)
         }
 
         branch(0, startingItems,
             startingPrice, startingCalories, startingProtein, startingFiber, startingFat,
-            startProtein, startVegetable, startCarb, startFat)
+            startProtein, startVegetable, startCarb, startFat, startOthers)
 
         return if (bestSolution.isEmpty()) {
             OptimizationResult.Failure("No valid solution found with the given constraints.")

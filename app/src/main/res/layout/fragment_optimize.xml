@@ -107,6 +107,19 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <!-- Others -->
+            <TextView style="@style/CategoryHeader" android:text="Others"/>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:paddingEnd="8dp">
+                    <TextView style="@style/FieldLabel" android:text="Min"/>
+                    <EditText android:id="@+id/et_others_min" style="@style/InputField" android:inputType="number" android:hint="0"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:paddingStart="8dp">
+                    <TextView style="@style/FieldLabel" android:text="Max"/>
+                    <EditText android:id="@+id/et_others_max" style="@style/InputField" android:inputType="number" android:hint="∞"/>
+                </LinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
 
         <Button android:id="@+id/btn_optimize"

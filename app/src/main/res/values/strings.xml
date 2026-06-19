@@ -20,5 +20,20 @@
         <item>vegetables</item>
         <item>carbohydrates</item>
         <item>fats</item>
+        <item>others</item>
+    </string-array>
+
+    <string-array name="sort_by_options">
+        <item>Default</item>
+        <item>Price</item>
+        <item>Calories</item>
+        <item>Protein</item>
+        <item>Fiber</item>
+        <item>Fat</item>
+    </string-array>
+
+    <string-array name="sort_order_options">
+        <item>Low to High</item>
+        <item>High to Low</item>
     </string-array>
 </resources>
